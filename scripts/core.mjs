@@ -1,31 +1,22 @@
+import {APPEARANCE_DEFAULTS, normalizeAppearance} from "./appearance.mjs";
+import {clamp, finite, imagePath} from "./utils.mjs";
+export {clamp, finite, imagePath} from "./utils.mjs";
+
 export const MODULE_ID = "frontline-unit-cards";
 export const DEFAULTS = Object.freeze({
   enabled: true, name: "", faction: "", description: "", specialty: "",
   portrait: "", background: "", width: 470, visibility: "all",
-  showHealth: true, showEffects: true, effectKinds: {}
+  showHealth: true, showEffects: true, effectKinds: {}, ...APPEARANCE_DEFAULTS
 });
 
-export function finite(value, fallback = 0) {
-  if (value === null || value === "" || value === undefined) return fallback;
-  const number = Number(value);
-  return Number.isFinite(number) ? number : fallback;
-}
-
-export const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const string = (value, limit) => typeof value === "string" ? value.trim().slice(0, limit) : "";
-
-export function imagePath(value) {
-  const path = string(value, 8192);
-  if (!path || /[\x00-\x1f]/.test(path) || path.startsWith("//") || path.includes("\\")) return "";
-  if (/^[a-z][a-z\d+.-]*:/i.test(path) && !/^https?:\/\//i.test(path)) return "";
-  return path;
-}
 
 export function normalizeConfig(value = {}) {
   const data = value && typeof value === "object" ? value : {};
   const effectKinds = Object.fromEntries(Object.entries(data.effectKinds ?? {})
     .filter(([key, kind]) => key.length < 500 && ["auto", "passive", "active", "hidden"].includes(kind)));
   return {
+    ...normalizeAppearance(data),
     enabled: data.enabled !== false,
     name: string(data.name, 180), faction: string(data.faction, 180),
     description: string(data.description, 12000), specialty: string(data.specialty, 500),
@@ -118,6 +109,7 @@ export function cardHTML(model, label) {
   const effects = (items, group) => items.map(effect => `<span class="fuc-effect fuc-effect--${group}" tabindex="0" aria-label="${esc(effect.name)}"><img src="${esc(effect.img)}" alt=""><span class="fuc-effect-tip" role="tooltip">${esc(effect.name)}</span></span>`).join("");
   const health = model.health;
   return `<div class="fuc-frame">
+    <div class="fuc-background" aria-hidden="true"${model.background ? "" : " hidden"}></div>
     <div class="fuc-portrait-column">
       <div class="fuc-portrait"><img class="fuc-portrait-image" src="${esc(model.portrait)}" alt="${esc(model.name)}"><div class="fuc-passives" aria-label="${esc(label("Passive"))}">${effects(model.passive, "passive")}</div><span class="fuc-portrait-mark" aria-hidden="true">✦</span></div>
       ${health ? `<div class="fuc-health ${health.level}" role="meter" aria-label="${esc(label("Health"))}" aria-valuemin="0" aria-valuemax="${health.max}" aria-valuenow="${health.remaining}" aria-valuetext="${esc(label("Wounds"))}: ${health.value} / ${health.max}"><span style="width:${health.percent}%"></span></div><div class="fuc-wound-label">${esc(label("Wounds"))} <b>${health.value} / ${health.max}</b></div>` : ""}

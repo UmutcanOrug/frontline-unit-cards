@@ -1,8 +1,12 @@
 /* Original metal dossier design. All rules are scoped to this module. */
 .fuc-card {
   --fuc-brass: #c7ad76;
-  --fuc-ink: #e9e3d4;
-  --fuc-background: linear-gradient(125deg, #30342f, #141918 65%, #232b27);
+  --fuc-base: #171d1a;
+  --fuc-shade: #30342f;
+  --fuc-accent-rgb: 199,173,118;
+  --fuc-ink: #d5d7ca;
+  --fuc-title: #f2ead4;
+  --fuc-muted: #9ba18b;
   position: fixed;
   z-index: 80;
   box-sizing: border-box;
@@ -10,13 +14,13 @@
   max-height: calc(100vh - 24px);
   overflow: auto;
   color: var(--fuc-ink);
-  background: #171d1a;
-  border: 1px solid #baa16b;
+  background: var(--fuc-base);
+  border: 1px solid var(--fuc-brass);
   border-radius: 3px;
-  box-shadow: 0 8px 30px #000b, 0 0 0 3px #151916, 0 0 0 4px #736847;
+  box-shadow: 0 8px 30px #000b, 0 0 0 3px var(--fuc-base), 0 0 0 4px rgba(var(--fuc-accent-rgb), .6);
   font: 14px/1.5 Georgia, "Times New Roman", serif;
   scrollbar-width: thin;
-  scrollbar-color: #756545 #1c211d;
+  scrollbar-color: var(--fuc-brass) var(--fuc-base);
   isolation: isolate;
 }
 .fuc-card[hidden] { display: none !important; }
@@ -26,9 +30,7 @@
   grid-template-columns: 112px minmax(0, 1fr);
   gap: 18px;
   padding: 16px 18px 12px 14px;
-  background-image: linear-gradient(90deg, #11171499, #131916aa), var(--fuc-background);
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(125deg, var(--fuc-shade), var(--fuc-base) 65%, var(--fuc-shade));
   min-height: 205px;
 }
 .fuc-frame::before, .fuc-frame::after {
@@ -38,48 +40,55 @@
 }
 .fuc-frame::before {
   inset: 5px;
-  border: 1px solid #c7ad7630;
+  z-index: 2;
+  border: 1px solid rgba(var(--fuc-accent-rgb), .2);
   background: repeating-linear-gradient(165deg, #ffffff02 0 1px, transparent 1px 5px);
 }
 .fuc-frame::after {
   inset: 0;
+  z-index: 2;
   background: radial-gradient(circle at 7px 7px, #b4a17a 0 1.5px, #070b08 2px, transparent 3px), radial-gradient(circle at calc(100% - 7px) 7px, #b4a17a 0 1.5px, #070b08 2px, transparent 3px), radial-gradient(circle at 7px calc(100% - 7px), #b4a17a 0 1.5px, #070b08 2px, transparent 3px), radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), #b4a17a 0 1.5px, #070b08 2px, transparent 3px);
 }
-.fuc-portrait-column, .fuc-dossier { position: relative; min-width: 0; }
+.fuc-background { position: absolute; inset: 0; z-index: 0; overflow: hidden; opacity: var(--fuc-image-opacity, 1); pointer-events: none; }
+.fuc-background[hidden] { display: none !important; }
+.fuc-background::before, .fuc-background::after { content: ""; position: absolute; inset: 0; }
+.fuc-background::before { background-image: var(--fuc-background-image, none); background-size: var(--fuc-image-size, cover); background-position: var(--fuc-image-position, center); background-repeat: no-repeat; filter: blur(var(--fuc-image-blur, 0px)) brightness(var(--fuc-image-brightness, 100%)); }
+.fuc-background::after { background: #000; opacity: var(--fuc-image-darkness, .6); }
+.fuc-portrait-column, .fuc-dossier { position: relative; min-width: 0; z-index: 1; }
 .fuc-portrait {
   height: 146px;
   position: relative;
-  border: 1px solid #b59d69;
+  border: 1px solid var(--fuc-brass);
   padding: 3px;
   background: #0f1511;
   box-shadow: 0 0 0 2px #080d09, inset 0 0 0 1px #4e5646;
 }
 .fuc-portrait-image { width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; filter: saturate(.7) contrast(1.05); }
 .fuc-portrait::after { content: ""; position: absolute; inset: 3px; pointer-events: none; box-shadow: inset 0 0 16px #0008; }
-.fuc-portrait-mark { position: absolute; bottom: -8px; left: calc(50% - 10px); width: 20px; color: #dec78c; text-align: center; font-size: 19px; text-shadow: 0 1px 2px #000; z-index: 2; }
+.fuc-portrait-mark { position: absolute; bottom: -8px; left: calc(50% - 10px); width: 20px; color: var(--fuc-brass); text-align: center; font-size: 19px; text-shadow: 0 1px 2px #000; z-index: 2; }
 .fuc-passives { position: absolute; z-index: 3; top: 7px; left: 7px; right: 7px; display: flex; flex-wrap: wrap; gap: 4px; }
-.fuc-effect { display: inline-flex; flex: 0 0 26px; width: 26px; height: 26px; position: relative; border: 1px solid #c7ad768c; background: #11160ff2; box-shadow: 0 2px 3px #000a; border-radius: 2px; cursor: help; }
+.fuc-effect { display: inline-flex; flex: 0 0 26px; width: 26px; height: 26px; position: relative; border: 1px solid rgba(var(--fuc-accent-rgb), .55); background: #11160ff2; box-shadow: 0 2px 3px #000a; border-radius: 2px; cursor: help; }
 .fuc-effect img { width: 100%; height: 100%; padding: 2px; box-sizing: border-box; object-fit: contain; border: 0; border-radius: 0; }
 .fuc-effect--active { border-color: #8fbdce; background: #172a30; }
-.fuc-effect:focus { outline: 2px solid #e7d395; outline-offset: 2px; }
+.fuc-effect:focus { outline: 2px solid var(--fuc-brass); outline-offset: 2px; }
 .fuc-effect-tip { visibility: hidden; position: absolute; z-index: 10; top: calc(100% + 5px); left: -2px; min-width: 100px; max-width: 210px; width: max-content; padding: 5px 8px; border: 1px solid #9e8c60; background: #111813; font: 12px/1.4 Arial, sans-serif; color: #fff5da; overflow-wrap: anywhere; pointer-events: none; }
 .fuc-effect:hover .fuc-effect-tip, .fuc-effect:focus .fuc-effect-tip { visibility: visible; }
 .fuc-health { height: 8px; margin-top: 14px; padding: 1px; border: 1px solid #786b4c; background: #050b09; box-sizing: content-box; box-shadow: 0 1px 2px #000; }
 .fuc-health > span { display: block; height: 100%; background: linear-gradient(#95bdac, #557e6b); transition: width .2s; box-shadow: inset 0 1px #d3f3d16b; }
 .fuc-health.hurt > span { background: linear-gradient(#d6bf83, #967a42); }
 .fuc-health.critical > span { background: linear-gradient(#c77d6e, #874838); }
-.fuc-wound-label { display: flex; justify-content: space-between; gap: 4px; margin-top: 5px; color: #b8b9a9; font: 9px/1.3 Arial, sans-serif; letter-spacing: .5px; text-transform: uppercase; }
-.fuc-wound-label b { font-weight: normal; color: #e8d9b4; }
-.fuc-kicker { display: flex; align-items: center; gap: 7px; font: 10px/1.3 Arial, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: #c2b07d; overflow-wrap: anywhere; }
+.fuc-wound-label { display: flex; justify-content: space-between; gap: 4px; margin-top: 5px; color: var(--fuc-muted); font: 9px/1.3 Arial, sans-serif; letter-spacing: .5px; text-transform: uppercase; }
+.fuc-wound-label b { font-weight: normal; color: var(--fuc-title); }
+.fuc-kicker { display: flex; align-items: center; gap: 7px; font: 10px/1.3 Arial, sans-serif; letter-spacing: 1.5px; text-transform: uppercase; color: var(--fuc-brass); overflow-wrap: anywhere; }
 .fuc-insignia { font-size: 16px; }
-.fuc-dossier-rule { flex: 1; min-width: 12px; height: 1px; background: linear-gradient(90deg, #c7ad7670, transparent); }
-.fuc-card h2 { margin: 6px 0 11px; color: #f2ead4; font: bold 23px/1.12 Georgia, serif; text-shadow: 0 2px 2px #000; border: none; overflow-wrap: anywhere; letter-spacing: -.3px; }
+.fuc-dossier-rule { flex: 1; min-width: 12px; height: 1px; background: linear-gradient(90deg, rgba(var(--fuc-accent-rgb), .45), transparent); }
+.fuc-card h2 { margin: 6px 0 11px; color: var(--fuc-title); font: bold 23px/1.12 Georgia, serif; text-shadow: 0 2px 2px #0004; border: none; overflow-wrap: anywhere; letter-spacing: -.3px; }
 .fuc-actives { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 9px; }
-.fuc-description { color: #d5d7ca; font: 13px/1.6 Georgia, serif; white-space: pre-line; overflow-wrap: anywhere; }
-.fuc-description--empty { color: #8d978b; font-style: italic; }
-.fuc-specialty { color: #d0bc83; margin-top: 10px; font-size: 12px; line-height: 1.5; font-style: italic; overflow-wrap: anywhere; }
-.fuc-footer { display: flex; justify-content: space-between; gap: 5px; margin-top: 14px; padding-top: 7px; border-top: 1px solid #b6a06b30; font: 8px/1.3 Arial, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; color: #9ba18b; }
-.fuc-footer > :last-child { color: #ac9360; font-size: 6px; letter-spacing: 2px; }
+.fuc-description { color: var(--fuc-ink); font: 13px/1.6 Georgia, serif; white-space: pre-line; overflow-wrap: anywhere; }
+.fuc-description--empty { color: var(--fuc-muted); font-style: italic; }
+.fuc-specialty { color: var(--fuc-brass); margin-top: 10px; font-size: 12px; line-height: 1.5; font-style: italic; overflow-wrap: anywhere; }
+.fuc-footer { display: flex; justify-content: space-between; gap: 5px; margin-top: 14px; padding-top: 7px; border-top: 1px solid rgba(var(--fuc-accent-rgb), .2); font: 8px/1.3 Arial, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; color: var(--fuc-muted); }
+.fuc-footer > :last-child { color: var(--fuc-brass); font-size: 6px; letter-spacing: 2px; }
 .fuc-config-button { flex: 1; }
 .fuc-editor .window-content { overflow-y: auto; padding: 18px; }
 .fuc-editor-body { display: flex; flex-direction: column; gap: 13px; }
@@ -94,6 +103,19 @@
 .fuc-editor-switches label { flex-direction: row; align-items: center; font-size: 12px; }
 .fuc-editor-switches input { width: auto; margin: 0; }
 .fuc-editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fuc-editor-grid[hidden] { display: none !important; }
+.fuc-appearance-config { display: flex; flex-direction: column; gap: 14px; border: 1px solid #96805866; border-radius: 4px; padding: 12px; }
+.fuc-appearance-config legend { padding: 0 6px; font-weight: bold; }
+.fuc-theme-swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.fuc-theme-swatches button { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 5px 7px; line-height: 1.3; min-height: 30px; }
+.fuc-theme-swatches button[aria-pressed="true"] { outline: 2px solid var(--fuc-swatch-accent); outline-offset: -2px; }
+.fuc-theme-swatches button span { width: 18px; height: 18px; flex: 0 0 18px; background: var(--fuc-swatch); border: 2px solid var(--fuc-swatch-accent); border-radius: 2px; }
+.fuc-range-heading { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
+.fuc-range-heading output { font-weight: normal; opacity: .8; white-space: nowrap; }
+.fuc-appearance-config input[type="color"] { height: 34px; padding: 3px; cursor: pointer; }
+.fuc-appearance-config input[type="range"] { accent-color: #c7ad76; }
+.fuc-appearance-actions { display: flex; gap: 8px; }
+.fuc-appearance-actions button { flex: 1; }
 .fuc-path-field { display: flex; gap: 6px; }
 .fuc-path-field button { flex: 0 0 34px; }
 .fuc-editor-note { margin: 0; font-size: 12px; line-height: 1.5; opacity: .75; }

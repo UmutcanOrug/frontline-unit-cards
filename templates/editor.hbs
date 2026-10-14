@@ -15,6 +15,24 @@
   <label>{{localize "FUC.Portrait"}}<span class="fuc-path-field"><input type="text" name="portrait" value="{{config.portrait}}"><button type="button" data-fuc-pick="portrait" aria-label="{{localize 'FUC.Browse'}}"><i class="fa-solid fa-file-image" aria-hidden="true"></i></button></span></label>
   <label>{{localize "FUC.Background"}}<span class="fuc-path-field"><input type="text" name="background" value="{{config.background}}"><button type="button" data-fuc-pick="background" aria-label="{{localize 'FUC.Browse'}}"><i class="fa-solid fa-file-image" aria-hidden="true"></i></button></span></label>
   <p class="fuc-editor-note">{{localize "FUC.ImageHint"}}</p>
+  <fieldset class="fuc-appearance-config"><legend>{{localize "FUC.Appearance"}}</legend>
+    <label>{{localize "FUC.ThemeLabel"}}<select name="theme">{{#each themeOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <div class="fuc-theme-swatches" role="group" aria-label="{{localize 'FUC.ThemeLabel'}}">{{#each themeSwatches}}<button type="button" data-fuc-theme="{{value}}" aria-label="{{name}}" title="{{name}}" aria-pressed="{{#if selected}}true{{else}}false{{/if}}" style="--fuc-swatch:{{color}};--fuc-swatch-accent:{{accent}}"><span aria-hidden="true"></span>{{name}}</button>{{/each}}</div>
+    <div class="fuc-editor-grid" data-fuc-custom-colors {{#unless customTheme}}hidden{{/unless}}>
+      <label>{{localize "FUC.CardColor"}}<input type="color" name="cardColor" value="{{config.cardColor}}"></label>
+      <label>{{localize "FUC.AccentColor"}}<input type="color" name="accentColor" value="{{config.accentColor}}"></label>
+    </div>
+    <div class="fuc-editor-grid">
+      <label><span class="fuc-range-heading">{{localize "FUC.BackgroundOpacity"}}<output data-fuc-value-for="backgroundOpacity" data-unit="%">{{config.backgroundOpacity}}%</output></span><input type="range" name="backgroundOpacity" aria-label="{{localize 'FUC.BackgroundOpacity'}}" value="{{config.backgroundOpacity}}" min="0" max="100" step="1"></label>
+      <label><span class="fuc-range-heading">{{localize "FUC.BackgroundDarkness"}}<output data-fuc-value-for="backgroundDarkness" data-unit="%">{{config.backgroundDarkness}}%</output></span><input type="range" name="backgroundDarkness" aria-label="{{localize 'FUC.BackgroundDarkness'}}" value="{{config.backgroundDarkness}}" min="0" max="100" step="1"></label>
+      <label><span class="fuc-range-heading">{{localize "FUC.BackgroundBrightness"}}<output data-fuc-value-for="backgroundBrightness" data-unit="%">{{config.backgroundBrightness}}%</output></span><input type="range" name="backgroundBrightness" aria-label="{{localize 'FUC.BackgroundBrightness'}}" value="{{config.backgroundBrightness}}" min="20" max="180" step="1"></label>
+      <label><span class="fuc-range-heading">{{localize "FUC.BackgroundBlur"}}<output data-fuc-value-for="backgroundBlur" data-unit=" px">{{config.backgroundBlur}} px</output></span><input type="range" name="backgroundBlur" aria-label="{{localize 'FUC.BackgroundBlur'}}" value="{{config.backgroundBlur}}" min="0" max="12" step="0.5"></label>
+      <label>{{localize "FUC.BackgroundFit"}}<select name="backgroundFit">{{#each fitOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label>{{localize "FUC.BackgroundPosition"}}<select name="backgroundPosition">{{#each positionOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    </div>
+    <p class="fuc-editor-note">{{localize "FUC.AppearanceHint"}}</p>
+    <div class="fuc-appearance-actions"><button type="button" data-fuc-preview>{{localize "FUC.Preview"}}</button><button type="button" data-fuc-reset-appearance>{{localize "FUC.ResetAppearance"}}</button></div>
+  </fieldset>
   <div class="fuc-editor-grid">
     <label>{{localize "FUC.Width"}}<input type="number" name="width" value="{{config.width}}" min="340" max="720" step="10"></label>
     <label>{{localize "FUC.VisibilityLabel"}}<select name="visibility">{{#each visibilityOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>

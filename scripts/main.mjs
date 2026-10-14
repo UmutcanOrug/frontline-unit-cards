@@ -1,5 +1,6 @@
 import {MODULE_ID, readConfig, cardModel, cardHTML, cardPosition, canViewCard} from "./core.mjs";
 import {UnitCardEditor} from "./editor.mjs";
+import {appearanceStyles} from "./appearance.mjs";
 
 const label = key => game.i18n.localize(`FUC.${key}`);
 
@@ -77,15 +78,15 @@ export class HoverCard {
     this.mount();
     this.element.innerHTML = cardHTML(cardModel(document, config), label);
     this.element.style.width = `${config.width * game.settings.get(MODULE_ID, "scale")}px`;
-    if (config.background) this.element.style.setProperty("--fuc-background", `url(${JSON.stringify(config.background)})`);
-    else this.element.style.removeProperty("--fuc-background");
+    for (const [property, value] of Object.entries(appearanceStyles(config, globalThis.document.baseURI))) this.element.style.setProperty(property, value);
     this.element.hidden = false;
     this.position();
   }
 
-  showPreview(document, config) {
+  showPreview(document, config, anchor = null) {
     this.hide();
     this.preview = true;
+    this.previewAnchor = anchor;
     this.show(document, config);
   }
 
@@ -100,6 +101,8 @@ export class HoverCard {
       const width = this.token.w * Math.hypot(transform.a, transform.b);
       const height = this.token.h * Math.hypot(transform.c, transform.d);
       anchor = {left: point.x + view.left - width / 2, right: point.x + view.left + width / 2, top: point.y + view.top - height / 2};
+    } else if (this.previewAnchor) {
+      anchor = this.previewAnchor;
     } else {
       anchor = {left: innerWidth / 2, right: innerWidth / 2, top: (innerHeight - size.height) / 2};
     }
@@ -132,7 +135,7 @@ export function openEditor(token, {prototype = false, actor = token?.actor} = {}
   const key = prototype ? `prototype-${actor.uuid}` : token.uuid;
   let editor = editors.get(key);
   if (!editor || !editor.rendered) {
-    editor = new UnitCardEditor({token, actor, prototype, onPreview: (doc, config) => hoverCard.showPreview(doc, config)});
+    editor = new UnitCardEditor({token, actor, prototype, onPreview: (doc, config, anchor) => hoverCard.showPreview(doc, config, anchor)});
     editors.set(key, editor);
     editor.addEventListener("close", () => editors.delete(key), {once: true});
   }
