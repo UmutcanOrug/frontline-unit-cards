@@ -1,0 +1,11 @@
+{"FUC":{
+  "Dossier":"Saha dosyası", "UnitRecord":"Birlik kaydı", "Passive":"Pasif etkiler", "Active":"Aktif etkiler", "Health":"Kalan dayanıklılık", "Wounds":"Yara", "NoLore":"Henüz saha notu girilmemiş.",
+  "EditorTitle":"Birlik Kartı", "Configure":"Birlik Kartı", "Enabled":"Üzerine gelince kartı aç", "ShowHealth":"Yara barını göster", "ShowEffects":"Etkileri göster", "Name":"Birlik adı", "Faction":"Faction / ordu", "Description":"Lore / açıklama", "Specialty":"Uzmanlık / kısa not", "Portrait":"Portre görseli", "Background":"Kart arka plan görseli", "Browse":"Görsel seç", "Width":"Kart genişliği (piksel)", "VisibilityLabel":"Kartı kim görebilir?", "Effects":"Aktör etkileri", "Automatic":"Otomatik", "Inactive":"Devre dışı", "Preview":"Önizleme", "Save":"Kartı kaydet", "Saved":"Birlik kartı kaydedildi.", "SaveFailed":"Kart kaydedilemedi. Yetkilerini kontrol edip tekrar dene.",
+  "PrototypeHint":"Bu ayarlar aktörden bundan sonra oluşturulacak tokenlara uygulanır. Sahnedeki mevcut tokenların ayarları ayrıdır.",
+  "ImageHint":"Portre boşsa aktör görseli kullanılır. Arka plan boşsa hazır metal tema kullanılır. Foundry görsel yolu veya HTTPS adresi girebilirsin.",
+  "EffectsHint":"Kalıcı etkiler Pasif, süreli etkiler Aktif grubuna otomatik yerleşir. Aşağıdan değiştirebilirsin; Gizli seçeneği yalnızca karttan gizler. Devre dışı veya baskılanmış etkiler kartta görünmez.",
+  "NoEffects":"Bu aktörde henüz kullanılabilir etki yok.", "ShortcutHint":"Üzerine gelinen veya seçili tokenın kartını düzenle (Shift+U).",
+  "Visibility":{"all":"Tokenı görebilen herkes", "observer":"Aktörü gözlemleyebilenler ve sahipleri", "owner":"Yalnızca aktör sahipleri", "gm":"Yalnızca GM"},
+  "Kind":{"auto":"Otomatik", "passive":"Pasif", "active":"Aktif", "hidden":"Kartta gizle"},
+  "Settings":{"Enabled":"Birlik kartlarını göster", "EnabledHint":"Tokenların üzerine gelince birlik dosyasını açar. Bu tercih yalnızca senin için geçerlidir.", "Delay":"Kart açılma gecikmesi (ms)", "Scale":"Kart boyutu çarpanı"}
+}}

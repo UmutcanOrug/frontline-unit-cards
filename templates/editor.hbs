@@ -1,0 +1,27 @@
+<div class="fuc-editor-body">
+  <header class="fuc-editor-heading"><span>✦</span><div><h2>{{localize "FUC.EditorTitle"}}</h2><p>{{tokenName}}</p></div></header>
+  {{#if prototype}}<p class="fuc-editor-note">{{localize "FUC.PrototypeHint"}}</p>{{/if}}
+  <div class="fuc-editor-switches">
+    <label><input type="checkbox" name="enabled" {{checked config.enabled}}> {{localize "FUC.Enabled"}}</label>
+    <label><input type="checkbox" name="showHealth" {{checked config.showHealth}}> {{localize "FUC.ShowHealth"}}</label>
+    <label><input type="checkbox" name="showEffects" {{checked config.showEffects}}> {{localize "FUC.ShowEffects"}}</label>
+  </div>
+  <div class="fuc-editor-grid">
+    <label>{{localize "FUC.Name"}}<input type="text" name="name" value="{{config.name}}" placeholder="{{tokenName}}" maxlength="180"></label>
+    <label>{{localize "FUC.Faction"}}<input type="text" name="faction" value="{{config.faction}}" maxlength="180"></label>
+  </div>
+  <label>{{localize "FUC.Description"}}<textarea name="description" rows="5" maxlength="12000">{{config.description}}</textarea></label>
+  <label>{{localize "FUC.Specialty"}}<input type="text" name="specialty" value="{{config.specialty}}" maxlength="500"></label>
+  <label>{{localize "FUC.Portrait"}}<span class="fuc-path-field"><input type="text" name="portrait" value="{{config.portrait}}"><button type="button" data-fuc-pick="portrait" aria-label="{{localize 'FUC.Browse'}}"><i class="fa-solid fa-file-image" aria-hidden="true"></i></button></span></label>
+  <label>{{localize "FUC.Background"}}<span class="fuc-path-field"><input type="text" name="background" value="{{config.background}}"><button type="button" data-fuc-pick="background" aria-label="{{localize 'FUC.Browse'}}"><i class="fa-solid fa-file-image" aria-hidden="true"></i></button></span></label>
+  <p class="fuc-editor-note">{{localize "FUC.ImageHint"}}</p>
+  <div class="fuc-editor-grid">
+    <label>{{localize "FUC.Width"}}<input type="number" name="width" value="{{config.width}}" min="340" max="720" step="10"></label>
+    <label>{{localize "FUC.VisibilityLabel"}}<select name="visibility">{{#each visibilityOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+  </div>
+  <fieldset class="fuc-effect-config"><legend>{{localize "FUC.Effects"}}</legend><p class="fuc-editor-note">{{localize "FUC.EffectsHint"}}</p>
+    {{#each effects}}<div class="fuc-effect-row {{#if disabled}}fuc-effect-disabled{{/if}}"><img src="{{img}}" alt=""><span>{{name}}<small>{{localize "FUC.Automatic"}}: {{automatic}}{{#if disabled}} · {{localize "FUC.Inactive"}}{{/if}}</small></span><select data-effect-key="{{key}}" aria-label="{{name}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></div>
+    {{else}}<p class="fuc-editor-note">{{localize "FUC.NoEffects"}}</p>{{/each}}
+  </fieldset>
+  <footer class="fuc-editor-footer"><button type="button" data-fuc-preview><i class="fa-solid fa-eye" aria-hidden="true"></i> {{localize "FUC.Preview"}}</button><button type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> {{localize "FUC.Save"}}</button></footer>
+</div>

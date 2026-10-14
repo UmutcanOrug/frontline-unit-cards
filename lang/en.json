@@ -1,0 +1,11 @@
+{"FUC":{
+  "Dossier":"Field dossier", "UnitRecord":"Unit record", "Passive":"Passive effects", "Active":"Active effects", "Health":"Remaining health", "Wounds":"Wounds", "NoLore":"No field notes recorded.",
+  "EditorTitle":"Unit Card", "Configure":"Unit Card", "Enabled":"Enable hover card", "ShowHealth":"Show wound bar", "ShowEffects":"Show effects", "Name":"Unit name", "Faction":"Faction / army", "Description":"Lore / description", "Specialty":"Specialty / short note", "Portrait":"Portrait image", "Background":"Card background image", "Browse":"Browse images", "Width":"Card width (px)", "VisibilityLabel":"Who can see the card?", "Effects":"Actor effects", "Automatic":"Automatic", "Inactive":"Inactive", "Preview":"Preview", "Save":"Save card", "Saved":"Unit card saved.", "SaveFailed":"The card could not be saved. Check your permissions and try again.",
+  "PrototypeHint":"These settings apply to future tokens created from this actor. Existing scene tokens have their own settings.",
+  "ImageHint":"Blank portrait uses the actor image. Blank background uses the built-in metal theme. Enter a Foundry image path or an HTTPS URL.",
+  "EffectsHint":"Permanent effects default to Passive, temporary effects to Active. Override each group below; Hidden only hides it on the card. Disabled or suppressed effects are never displayed.",
+  "NoEffects":"This actor has no applicable effects yet.", "ShortcutHint":"Configure the hovered or selected token (Shift+U).",
+  "Visibility":{"all":"Everyone who can see the token", "observer":"Actor observers and owners", "owner":"Actor owners only", "gm":"GM only"},
+  "Kind":{"auto":"Automatic", "passive":"Passive", "active":"Active", "hidden":"Hidden on card"},
+  "Settings":{"Enabled":"Enable hover cards", "EnabledHint":"Show unit dossiers when you hover over tokens. This preference applies only to you.", "Delay":"Hover delay (ms)", "Scale":"Card size multiplier"}
+}}
